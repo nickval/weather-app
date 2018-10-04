@@ -1,13 +1,10 @@
 .App {
-  /* font-size: 14px; */
   font-family: Helvetica, sans-serif;
   color: ivory;
   width: 280px;
   height: 260px;
   position: fixed;
-  /* top: 50px; */
   left: 50%;
-  /* padding: 10px; */
   margin-top: 10px;
   margin-left: -150px;
   border:1px solid dimgray;
@@ -16,9 +13,6 @@
 }
 
 .City {
-  /* position: fixed; */
-  /* width: 280px;
-  padding: 50px; */
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-stretch: extra-expanded;
   margin-bottom: 20px;
@@ -36,28 +30,3 @@
   margin-right: 20px;
 
 }
-
-/* .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-} */
