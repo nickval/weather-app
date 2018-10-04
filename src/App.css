@@ -30,4 +30,5 @@
   display: inline-block;
   margin-left: 20px;
   margin-right: 20px;
+  max-width: 70px;
 }
