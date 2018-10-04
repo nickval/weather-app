@@ -28,19 +28,23 @@ class App extends Component {
 }
 
 setData = (data) => {
-  let _weather = [];
+  let _weather = [],
+      _temp = Math.round(data.main.temp*100)/100,
+      _clouds = Math.round(data.clouds.all),
+      _speed = Math.round(data.wind.speed);
+
   _weather.push({
     name: 'temperature',
     image: this.iconURLCreate(data.weather[0].icon),
-    data: data.main.temp
+    data: _temp
   });
   _weather.push({
     name: 'wind',
-    data: data.wind.speed
+    data: _speed
   });
   _weather.push({
     name: 'clouds',
-    data: data.clouds.all
+    data: _clouds
   });
   this.setState({
     weatherData: _weather
