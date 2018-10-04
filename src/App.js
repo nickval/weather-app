@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import './App.css';
 import WeatherData from './Components/WeatherData'
 import CityInput from './Components/CityInput';
-import axios from 'axios';
 
 const Url = 'https://proxy-qurgawuxei.now.sh/data/2.5/weather?',
       Key = '658721d6e405c4c2214c53df32583a7a',
       IconURL = 'http://openweathermap.org/img/w/';
-let gotIp;
+let   gotIp,
+      errorMessage = 'Getting your IP ...';
 
 class App extends Component {
   state = {
@@ -21,8 +21,74 @@ class App extends Component {
       }
     ]
   }
+  onCityChange = (event) => {
+    this.setState({
+      cityName: event.target.value
+    })
+}
 
-  componentDidMount(){
+setData = (data) => {
+  let _weather = [];
+  _weather.push({
+    name: 'temperature',
+    image: this.iconURLCreate(data.weather[0].icon),
+    data: data.main.temp
+  });
+  _weather.push({
+    name: 'wind',
+    data: data.wind.speed
+  });
+  _weather.push({
+    name: 'clouds',
+    data: data.clouds.all
+  });
+  this.setState({
+    weatherData: _weather
+  })
+}
+
+iconURLCreate(id){
+  console.log(`icon ${id}`);
+  return `${IconURL}${id}.png`;
+}
+
+fetchData = () => {
+  fetch(Url + 'q=' + this.state.cityName + '&appid=' + Key)
+    .then(res => res.json())
+    .then((res) => 
+    {
+      this.setData(res);
+    }).catch(
+      (err) => {
+        console.log(err);
+        this.setState({
+          weatherData: [{name: "There are no weather for your city."}]
+        })
+      }
+    );
+}
+
+ipLookUp = () => {
+  fetch('https://ipinfo.io/json/')
+    .then(res => res.json())
+    .then(
+      (result) => {
+        gotIp = true;
+        this.setState({
+          cityName: result.city,
+          ip: result.ip
+        });
+        this.fetchData();
+      }
+    ).catch(
+      (err) => 
+      {
+        console.log(err);
+        errorMessage = 'Can\'t get your IP. Please reload page';
+      }
+    )
+  }
+  componentWillMount(){
     if(!gotIp) {
       this.ipLookUp();
     }
@@ -30,7 +96,7 @@ class App extends Component {
 
   render() {
     if(!gotIp) {
-      return 'Getting your IP ...'
+      return errorMessage;
     }
     return (
       <div className="App">
@@ -44,67 +110,6 @@ class App extends Component {
           
       </div>
     );
-  }
-
-  onCityChange = (event) => {
-      this.setState({
-        cityName: event.target.value
-      })
-  }
-
-  setData = (data) => {
-    let _weather = [];
-    _weather.push({
-      name: 'temperature',
-      image: this.iconURLCreate(data.weather[0].icon),
-      data: data.main.temp
-    });
-    _weather.push({
-      name: 'wind',
-      data: data.wind.speed
-    });
-    _weather.push({
-      name: 'clouds',
-      data: data.clouds.all
-    });
-    this.setState({
-      weatherData: _weather
-    })
-  }
-
-  iconURLCreate(id){
-    console.log(`icon ${id}`);
-    return `${IconURL}${id}.png`;
-  }
-
-  fetchData = (event) => {
-    axios.get(Url + 'q=' + this.state.cityName + '&appid=' + Key).then(response => 
-      {
-        this.setData(response.data);
-      }).catch(
-        (err) => {
-          console.log(err);
-          this.setState({
-            weatherData: [{name: "There are no weather for your city."}]
-          })
-        }
-      );
-
-  }
-
-  ipLookUp = () => {
-    fetch('https://ipinfo.io/json/')
-      .then(res => res.json())
-      .then(
-        (result) => {
-          gotIp = true;
-          this.setState({
-            cityName: result.city,
-            ip: result.ip
-          });
-          this.fetchData();
-        }
-      ).catch()
   }
 }
 
