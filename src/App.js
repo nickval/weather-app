@@ -15,9 +15,9 @@ class App extends Component {
     ip: '',
     weatherData: [
       {
-        name: 'temperature',
+        name: '',
         image: '',
-        data: '22-27'
+        data: ''
       }
     ]
   }
@@ -81,20 +81,26 @@ class App extends Component {
     axios.get(Url + 'q=' + this.state.cityName + '&appid=' + Key).then(response => 
       {
         this.setData(response.data);
-      }).catch();
+      }).catch(
+        (err) => {
+          console.log(err);
+          this.setState({
+            weatherData: [{name: "There are no weather for your city."}]
+          })
+        }
+      );
 
   }
 
   ipLookUp = () => {
-    fetch('http://ip-api.com/json')
+    fetch('https://ipinfo.io/json/')
       .then(res => res.json())
       .then(
         (result) => {
-          console.log(`location: ${result.city} and IP: ${result.query}`);
           gotIp = true;
           this.setState({
             cityName: result.city,
-            ip: result.query
+            ip: result.ip
           });
           this.fetchData();
         }
