@@ -2,7 +2,7 @@
   font-family: Helvetica, sans-serif;
   color: ivory;
   width: 280px;
-  height: 260px;
+  height: 220px;
   position: fixed;
   left: 50%;
   margin-top: 10px;
@@ -10,12 +10,14 @@
   border:1px solid dimgray;
   background-image: linear-gradient(white, dimgray);
   text-align: center;
+  text-shadow: 1px 1px darkslategrey;
 }
 
 .City {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-stretch: extra-expanded;
-  margin-bottom: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-image: linear-gradient(gray, white);
 }
 .Data {
@@ -28,5 +30,4 @@
   display: inline-block;
   margin-left: 20px;
   margin-right: 20px;
-
 }
